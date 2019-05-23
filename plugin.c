@@ -14,5 +14,5 @@ int hello()
 
 }
 
-struct vtbl v = { hello };
+EXPORT_EPOINT(hello);
 
