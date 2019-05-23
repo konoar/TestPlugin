@@ -3,7 +3,7 @@
 
 struct vtbl
 {
-	void (*plgmain)(void);
+	int (*plgmain)(void);
 };
 
 #endif // __COMMON_H__
