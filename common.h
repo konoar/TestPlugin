@@ -14,17 +14,17 @@ struct vtbl
 	int (*plgmain)(void);
 };
 
-struct Record
+struct QueueRecord
 {
 	int op;
 	int bi;
 	int bo;
-	int reserved;
+	int re;
 };
 
 extern int QueueInit(int id);
-extern int QueuePut(struct Record *rec);
-extern int QueueGet(struct Record *rec);
+extern int QueuePut(struct QueueRecord *rec);
+extern int QueueGet(struct QueueRecord *rec);
 
 #endif // __COMMON_H__
 
