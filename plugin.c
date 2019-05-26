@@ -1,18 +1,44 @@
-#include <stdio.h>
-#include <unistd.h>
+/****************************************************
+ *													*
+ * plugin.c											*
+ *   copyright 2019.05.23 konoar					*
+ *													*
+ ****************************************************/
+
 #include "common.h"
 
-int hello()
+#include <unistd.h>
+#include <stdio.h>
+
+static int AbortFlag = 0;
+
+int PlgMain(int qid)
 {
 
-	for (int idx = 0; idx < 30; idx++) {
-		printf("Hello Plugin!\n");
-		usleep(500000);
+	struct ksQueueRecord rec;
+
+	if (KS_INVALID == ksQueueInit(qid)) {
+		return KS_FAIL;
 	}
 
-	return 0;
+	while (!AbortFlag) {
+
+		if (ksQueueGet(&rec)) {
+			printf("OPPRINT: %d\n", rec.bi);
+		}
+
+		usleep(500000);
+
+	}
+
+	return KS_SUCCESS;
 
 }
 
-EXPORT_EPOINT(hello);
+void Abort()
+{
+	AbortFlag = 1;
+}
+
+KS_EXPORT_EPOINT(PlgMain, Abort);
 

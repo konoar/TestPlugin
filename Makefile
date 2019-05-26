@@ -1,6 +1,7 @@
 ############################################
 #
 # Plugin Test
+#   copyright 2019 konoar
 #
 ############################################
 
@@ -10,16 +11,16 @@ TARGETPLG := ./plugin.so
 .PHONY: clean run
 
 run: $(TARGETPLG) $(TARGETBIN)
-	@$(TARGETBIN)
+	@-$(TARGETBIN)
 
 clean:
 	@-rm ./*.o $(TARGETBIN) $(TARGETPLG)
 
-$(TARGETBIN): main.o
-	@gcc -o $(TARGETBIN) $^ -ldl
+$(TARGETBIN): common.o main.o
+	@gcc -o $(TARGETBIN) $^ -ldl -lpthread
 
-$(TARGETPLG): plugin.o
-	@gcc -o $(TARGETPLG) $^ -shared
+$(TARGETPLG): common.o plugin.o
+	@gcc -o $(TARGETPLG) $^ -lpthread -shared
 
 %.o: %.c
 	@gcc -o $@ -c $^
