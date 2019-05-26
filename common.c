@@ -60,7 +60,7 @@ static int ksQueueMutexInit()
 		return KS_FAIL;
 	}
 
-	pthread_mutex_init((pthread_mutex_t*)(&Info->mt), &attr);
+	pthread_mutex_init((pthread_mutex_t*)&Info->mt, &attr);
 
 	return KS_SUCCESS;
 
@@ -72,6 +72,8 @@ static int ksQueueMutexUninit()
 	if (!Info) {
 		return KS_FAIL;
 	}
+
+	pthread_mutex_destroy((pthread_mutex_t*)&Info->mt);
 
 	return KS_SUCCESS;
 
